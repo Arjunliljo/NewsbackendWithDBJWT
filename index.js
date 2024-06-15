@@ -6,6 +6,8 @@ const port = 3000;
 const articleRouts = require("./routes/articleRoutes");
 const authorRouts = require("./routes/authorRoutes");
 
+//LWYmoTlkFF7wqtGl - mongo db password
+
 app.use(cors());
 app.use(express.json());
 
@@ -22,6 +24,6 @@ main()
 
 async function main() {
   await mongoose.connect(
-    "mongodb+srv://arjun7180:uMFRgsbVoOMw2BCc@cluster0.k2ag37a.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    `mongodb+srv://arjun7180:<password>@cluster0.k2ag37a.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
   );
 }
