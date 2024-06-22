@@ -8,8 +8,15 @@ const articleRouts = require("./routes/articleRoutes");
 const authorRouts = require("./routes/authorRoutes");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const cookieParser = require("cookie-parser");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 app.use(express.json());
 
 app.use("/article", articleRouts);

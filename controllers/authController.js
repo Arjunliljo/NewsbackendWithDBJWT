@@ -2,6 +2,7 @@ const User = require("../Models/userSchema");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const SECRET_KEY = process.env.SECRET_KEY;
 const login = async (req, res) => {
   const { userName, password } = req.body;
 
@@ -37,28 +38,26 @@ const logout = async (req, res) => {
 };
 
 const verifyLogin = (req, res) => {
+  console.log(req.cookies);
   try {
     if (req.cookies && req.cookies.token) {
       const token = req.cookies.token;
-      jwt.verify(token, SECRET_KEY, (err, decoded) => {
+
+      jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
         if (err) {
-          // If token verification fails
           res.status(401).json({ isLoggedIn: false, error: "Invalid token" });
         } else {
-          // If token verification succeeds
           res.json({ isLoggedIn: true, user: decoded });
         }
       });
     } else {
-      res.status(401).json({ isLoggedIn: false });
+      res.status(401).json({ isLoggedIn: false, error: "Token Not Exist" });
     }
   } catch (error) {
     console.error("Error verifying login:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
-module.exports = verifyLogin;
 
 module.exports = {
   login,
