@@ -19,8 +19,8 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/article", articleRouts);
-app.use("/author", authorRouts);
+app.use("/articles", articleRouts);
+app.use("/authors", authorRouts);
 app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 

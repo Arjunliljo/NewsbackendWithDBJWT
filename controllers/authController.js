@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const SECRET_KEY = process.env.SECRET_KEY;
+
 const login = async (req, res) => {
   const { userName, password } = req.body;
 
@@ -21,6 +22,7 @@ const login = async (req, res) => {
       { _id: user._id, userName: user.userName },
       SECRET_KEY
     );
+
     res.cookie("token", token, { httpOnly: true });
     return res.status(200).json({ message: "Login successful" });
   } catch (error) {
@@ -38,7 +40,6 @@ const logout = async (req, res) => {
 };
 
 const verifyLogin = (req, res) => {
-  console.log(req.cookies);
   try {
     if (req.cookies && req.cookies.token) {
       const token = req.cookies.token;

@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 
 const articleSchema = new mongoose.Schema({
-  title: String,
-  image_url: String,
-  creator: String,
+  heading: String,
+  image: String,
+  author: String,
+  authorImg: String,
   category: String,
-  keywords: String,
+  btnContent: String,
   description: String,
 });
 
