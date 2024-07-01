@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
 
 const authorSchema = new mongoose.Schema({
-  author: String,
+  author: {
+    type: String,
+    required: [true, "Must have author name"],
+    unique: true,
+    trim: true,
+  },
   authorImg: String,
 });
 

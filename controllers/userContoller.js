@@ -27,18 +27,14 @@ async function getUser(req, res) {
 
 // Add a new user
 async function addUser(req, res) {
-  const hash = bcrypt.hashSync(req.body.password, saltround);
-  const data = req.body;
-  const newUser = new User({
-    ...data,
-    password: hash,
-  });
-
   try {
-    const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+    const hash = bcrypt.hashSync(req.body.password, saltround);
+    const data = req.body;
+
+    const user = await User.create({ ...data, password: hash });
+    res.status(201).json(user);
   } catch (error) {
-    res.status(400).json({ message: "Error adding user", error });
+    res.status(400).json({ status: "fail", message: error.message });
   }
 }
 

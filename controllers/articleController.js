@@ -1,7 +1,7 @@
 const Article = require("../Models/articleModel");
 
 const getAllArticle = async (req, res) => {
-  const article = await Article.find({});
+  const article = await Article.find({}).sort({ createdAt: -1 });
   res.json(article);
 };
 const getArticle = async (req, res) => {
@@ -10,9 +10,13 @@ const getArticle = async (req, res) => {
   res.json(article);
 };
 const addArticle = async (req, res) => {
-  const aritcle = new Article(req.body);
-  await aritcle.save();
-  res.json(aritcle);
+  try {
+    const aritcle = new Article(req.body);
+    await aritcle.save();
+    res.json(aritcle);
+  } catch (error) {
+    res.status(400).json({ status: "fail", message: error.message });
+  }
 };
 const updateArticle = async (req, res) => {
   const updatedArticle = await Article.findByIdAndUpdate(

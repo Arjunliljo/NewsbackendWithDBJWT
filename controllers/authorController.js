@@ -1,8 +1,15 @@
 const Author = require("../Models/authorModel");
 
 const getAllAuthors = async (req, res) => {
-  const authors = await Author.find({});
-  res.json(authors);
+  let authors;
+  try {
+    if (req.query.author) {
+      authors = await Author.find({ author: req.query.author });
+    } else authors = await Author.find({});
+    res.status(200).json(authors);
+  } catch (error) {
+    res.status(404).json({ status: "fail", message: error.message });
+  }
 };
 
 const getAuthor = async (req, res) => {
@@ -11,9 +18,13 @@ const getAuthor = async (req, res) => {
   res.json(author);
 };
 const addAuthor = async (req, res) => {
-  const author = new Author(req.body);
-  await author.save();
-  res.json(author);
+  try {
+    const author = new Author(req.body);
+    await author.save();
+    res.json(author);
+  } catch (error) {
+    res.status(400).json({ status: "fail", message: error.message });
+  }
 };
 const updateAuthor = async (req, res) => {
   const updatedAuthor = await Author.findByIdAndUpdate(
