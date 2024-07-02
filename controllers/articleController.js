@@ -1,8 +1,12 @@
 const Article = require("../Models/articleModel");
+const APIFeatures = require("../APIFeatures/APIFeatures");
 
 const getAllArticle = async (req, res) => {
-  const article = await Article.find({}).sort({ createdAt: -1 });
-  res.json(article);
+  const features = new APIFeatures(Article.find(), req.query);
+  features.sort().filter().paginate(Article.countDocuments()).limitFields();
+
+  const article = await features.query;
+  res.status(200).json(article);
 };
 const getArticle = async (req, res) => {
   const article = await Article.findById(req.params.articleId).exec();

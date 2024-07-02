@@ -1,11 +1,13 @@
 const Author = require("../Models/authorModel");
+const APIFeatures = require("../APIFeatures/APIFeatures");
 
 const getAllAuthors = async (req, res) => {
-  let authors;
   try {
-    if (req.query.author) {
-      authors = await Author.find({ author: req.query.author });
-    } else authors = await Author.find({});
+    const features = new APIFeatures(Author.find(), req.query);
+    features.sort().filter().limitFields().paginate(Author.countDocuments());
+
+    const authors = await features.query;
+
     res.status(200).json(authors);
   } catch (error) {
     res.status(404).json({ status: "fail", message: error.message });

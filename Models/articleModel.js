@@ -5,9 +5,8 @@ const articleSchema = new mongoose.Schema({
   author: String,
   image: String,
   btnContent: String,
-  btnContent: String,
   description: String,
-  createdAt: { type: Date, default: Date.now },
+  createdAt: { type: Date, default: Date.now, select: false },
 });
 
 const Article = mongoose.model("Article", articleSchema);
