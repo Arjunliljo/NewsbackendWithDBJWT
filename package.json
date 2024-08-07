@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "slash"
+    "test": "slash",
+    "start": "node api/index.js",
+    "dev": "nodemon api/index.js"
   },
   "author": "Arjun Liljo",
   "license": "ISC",

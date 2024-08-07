@@ -4,10 +4,10 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
-const articleRouts = require("./routes/articleRoutes");
-const authorRouts = require("./routes/authorRoutes");
-const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes");
+const articleRoutes = require("../routes/articleRoutes");
+const authorRoutes = require("../routes/authorRoutes");
+const userRoutes = require("../routes/userRoutes");
+const authRoutes = require("../routes/authRoutes");
 const cookieParser = require("cookie-parser");
 
 app.use(
@@ -20,8 +20,9 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/articles", articleRouts);
-app.use("/authors", authorRouts);
+app.get("/", articleRoutes);
+app.use("/articles", articleRoutes);
+app.use("/authors", authorRoutes);
 app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 
