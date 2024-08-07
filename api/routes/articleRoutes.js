@@ -1,5 +1,4 @@
 const express = require("express");
-
 const {
   getArticle,
   getAllArticle,
@@ -9,6 +8,8 @@ const {
 } = require("../controllers/articleController");
 
 const router = express.Router();
+
+router.get("/test", (req, res) => res.json({ message: "Working" }));
 
 router.get("/", getAllArticle);
 router.get("/:articleId", getArticle);

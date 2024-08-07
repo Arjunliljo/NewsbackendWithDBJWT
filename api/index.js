@@ -3,10 +3,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const articleRoutes = require("../routes/articleRoutes");
-const authorRoutes = require("../routes/authorRoutes");
-const userRoutes = require("../routes/userRoutes");
-const authRoutes = require("../routes/authRoutes");
+
+const articleRoutes = require("./routes/articleRoutes");
+const authorRoutes = require("./routes/authorRoutes");
+const userRoutes = require("./routes/userRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
@@ -20,12 +21,16 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 
+app.use("/api", articleRoutes);
+
 app.use("/api/articles", articleRoutes);
 app.use("/api/authors", authorRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 
-app.use((req, res, next) => res.send("<h1>Page Not found</h1>"));
+app.use((req, res) =>
+  res.status(404).json({ status: "fail", message: "Page Not Found" })
+);
 
 // Connect to MongoDB
 async function main() {
@@ -43,6 +48,11 @@ main();
 module.exports = (req, res) => {
   app(req, res);
 };
+
+// const port = 3000;
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`);
+// });
 
 // require("dotenv").config();
 // const express = require("express");
@@ -72,7 +82,7 @@ module.exports = (req, res) => {
 // app.use("/api/auth", authRoutes);
 
 // app.use((req, res, next) => res.send("<h1>Page Not found</h1>"));
-
+// const port = 3000;
 // app.listen(port, () => {
 //   console.log(`Example app listening on port ${port}`);
 // });
